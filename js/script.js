@@ -6,11 +6,26 @@
   const titleClickHandler = function(event){
   console.log('Link was clicked!');
   console.log(event);
+
     /* remove class 'active' from all article links  */
+
+  const activeLinks = document.querySelectorAll('.titles a.active');
+
+  for(let activeLink of activeLinks){
+  activeLink.classList.remove('active');
+}
 
   /* add class 'active' to the clicked link */
 
+  titleClickHandler('Link was clicked!')
+
   /* remove class 'active' from all articles */
+
+  const activeArticles = document.querySelectorAll('posts .active');
+
+  for(let activeArticle of activeArticles){
+  activeArticle.classList.remove('active');
+}
 
   /* get 'href' attribute from the clicked link */
 
@@ -19,22 +34,9 @@
   /* add class 'active' to the correct article */
 }
 
-titleClickHandler('Link was clicked!')
-
 
 const links = document.querySelectorAll('.titles a');
 
 for(let link of links){
   link.addEventListener('click', titleClickHandler);
 }
-
-sourceCapabilities: InputDeviceCapabilities {firesTouchEvents: false}
-srcElement: span
-tangentialPressure: 0
-target: span
-tiltX: 0
-tiltY: 0
-timeStamp: 133012.80000007153
-toElement: null
-twist: 0
-type: "click"
