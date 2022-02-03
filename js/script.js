@@ -36,14 +36,14 @@
 
     targetArticle.classList.add('active');
   };
-  
+
   /*czesc 2 zadanka*/
 
   const optArticleSelector = '.post',
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles';
 
-  function generateTitleLinks() {
+  const generateTitleLinks = function () {
 
     /* remove contents of titleList */
 
@@ -82,4 +82,59 @@
 
   generateTitleLinks();
 
+
+  /*czesc 3 zadanka*/
+
+  const optArticleTagsSelector = '.post-tags .list';
+
+  const generateTags = function () {
+
+    /* find all articles */
+
+    const articles = document.querySelectorAll(optArticleSelector);
+
+    /* START LOOP: for every article: */
+
+    for (let article of articles) {
+
+      /* find tags wrapper */
+
+      const tagsWrapper = article.querySelector(optArticleTagsSelector);
+
+      /* make html variable with empty string */
+
+      let html = '';
+
+      /* get tags from data-tags attribute */
+
+      const articleTags = article.getAttribute('data-tags');
+
+      /* split tags into array */
+
+      const articleTagsArray = articleTags.split(' ');
+
+
+      /* START LOOP: for each tag */
+
+      for (let tag of articleTagsArray) {
+
+        /* generate HTML of the link */
+
+        const linkHTML = '<li><a href="#tag-' + articleTags + '"><span>' + articleTagsArray + '</span></a></li>';
+
+        /* add generated code to html variable */
+
+        article.innerHTML = article.innerHTML + linkHTML;
+      }
+      /* END LOOP: for each tag */
+
+      /* insert HTML of all the links into the tags wrapper */
+
+      const links = tagsWrapper.querySelectorAll('a');
+      console.log (links)
+      /* END LOOP: for every article: */
+    }
+  }
+
+  generateTags();
 }
