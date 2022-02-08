@@ -52,7 +52,7 @@
 
     /* for each article */
 
-    const articles = document.querySelectorAll(optArticleSelector + customSelector);
+    const articles = document.querySelectorAll(optArticleSelector +  customSelector);
 
     for (let article of articles) {
 
@@ -101,10 +101,6 @@
 
       const tagsWrapper = article.querySelector(optArticleTagsSelector);
 
-      /* make html variable with empty string */
-
-      let html = '';
-
       /* get tags from data-tags attribute */
 
       const articleTags = article.getAttribute('data-tags');
@@ -128,11 +124,6 @@
 
       }
       /* END LOOP: for each tag */
-
-      /* insert HTML of all the links into the tags wrapper */
-
-      const links = tagsWrapper.querySelectorAll('a');
-
 
       /* END LOOP: for every article: */
     }
@@ -205,14 +196,11 @@
 
   };
 
-  generateTitleLinks();
-  generateTags();
-  addClickListenersToTags();
 
   //Zadanie: dodanie autora
 
   const optArticleSelectors = '.post';
-  const optArticleAuthorSelector = '.post-tags .list';
+  const optArticleAuthorSelector = '.post-author';
 
   const generateAuthors = function () {
     /* find all articles */
@@ -221,13 +209,16 @@
     for (let article of articles) {
       /* find authors wrapper */
       const authorsWrapper = article.querySelector(optArticleAuthorSelector);
-      /* make html variable with empty string */
-      let html = '';
+    
       /* get author from data-author attribute */
-      const articleAuthors = article.getAttribute('data-author');
-      
+      const articleAuthor = article.getAttribute('data-author');
+
+      const linkHTML = '<a href="#author-' + articleAuthor + '"><span>' + articleAuthor + '</span></a>';
+
       /* insert HTML of all the links into the authors wrapper */
-      const links = authorsWrapper.querySelector('a');
+
+      authorsWrapper.innerHTML = linkHTML;
+
       /* END LOOP: for every article: */
     }
   };
@@ -251,34 +242,12 @@
 
     const author = href.replace('#author-', '');
 
-    /* find all author links with class active */
-
-    const activeAuthorLinks = document.querySelectorAll('a.active[href^="#author-"]');
-
-    /* START LOOP: for each active author link */
-
-    for (let activeAuthorLink of activeAuthorLinks) {
-
-      /* remove class active */
-
-      activeAuthorLink.classList.remove('active');
-
-      /* END LOOP: for each active tag link */
-    }
-
     /* find all author links with "href" attribute equal to the "href" constant */
 
     const sameAuthorLinks = document.querySelectorAll('a[href="' + href + '"]');
 
-    /* START LOOP: for each found author link */
-    for (let sameAuthorLink of sameAuthorLinks) {
-
-      /* add class active */
-      sameAuthorLink.classList.add('active');
-      /* END LOOP: for each found tag link */
-    }
     /* execute function "generateTitleLinks" with article selector as argument */
-    generateTitleLinks('[data-authors~="' + author + '"]');
+    generateTitleLinks('[data-authors="' + author + '"]');
   };
 
 
@@ -293,12 +262,17 @@
 
       /* END LOOP: for each link */
 
-
     }
   };
 
+  generateTitleLinks();
+  generateTags();
+  addClickListenersToTags();
   addClickListenersToAuthors();
 
+  //CHMURA TAGÓW ..........................................................................................................
+
+  const optTagsListSelector = '.tags.list';
 
 
 }
