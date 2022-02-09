@@ -43,6 +43,8 @@
     optTitleSelector = '.post-title',
     optTitleListSelector = '.titles';
 
+  const optTagsListSelector = '.tags.list';
+
   const generateTitleLinks = function (customSelector = '') {
 
     /* remove contents of titleList */
@@ -52,7 +54,7 @@
 
     /* for each article */
 
-    const articles = document.querySelectorAll(optArticleSelector +  customSelector);
+    const articles = document.querySelectorAll(optArticleSelector + customSelector);
 
     for (let article of articles) {
 
@@ -64,8 +66,6 @@
 
       const articleTitle = article.querySelector(optTitleSelector).innerHTML;
 
-      /* get the title from the title element */
-
       /* create HTML of the link */
 
       const linkHTML = '<li><a href="#' + articleId + '"><span>' + articleTitle + '</span></a></li>';
@@ -75,19 +75,31 @@
       titleList.innerHTML = titleList.innerHTML + linkHTML;
     }
     const links = titleList.querySelectorAll('a');
-
     for (let link of links) {
       link.addEventListener('click', titleClickHandler);
     }
   };
 
-
-
   //czesc 3 zadanka.......................................................................................................
 
   const optArticleTagsSelector = '.post-tags .list';
 
+  const calculateTagsParams = function (tags) {
+
+    const params = {max: 0, min: 999999};
+    for(let tag in tags){
+      console.log(tag + ' is used ' + tags[tag] + ' times');
+      params.max = tags[tag] > params.max ? tags[tag] : params.max;
+      params.min = tags[tag] < params.min ? tags[tag] : params.min;
+    }
+    return params;
+  };
+  
+    
   const generateTags = function () {
+
+    /* [NEW] create a new variable allTags with an empty object */
+    let allTags = {};
 
     /* find all articles */
 
@@ -109,7 +121,6 @@
 
       const articleTagsArray = articleTags.split(' ');
 
-
       /* START LOOP: for each tag */
 
       for (let tag of articleTagsArray) {
@@ -122,11 +133,39 @@
 
         tagsWrapper.innerHTML = tagsWrapper.innerHTML + linkHTML;
 
+        /* [NEW] check if this link is NOT already in allTags */
+        if (!allTags[tag]) {
+
+          /* [NEW] add tag to allTags object */
+
+          allTags[tag] = 1;
+        } else {
+          allTags[tag]++;
+        }
       }
       /* END LOOP: for each tag */
 
       /* END LOOP: for every article: */
     }
+    /* [NEW] find list of tags in right column */
+    const tagList = document.querySelector(optTagsListSelector);
+
+    /* [NEW] create variable for all links HTML code */
+    const tagsParams = calculateTagsParams(allTags);
+    console.log('tagsParams:', tagsParams)
+    let allTagsHTML = '';
+
+    /* [NEW] START LOOP: for each tag in allTags: */
+    for (let tag in allTags) {
+
+      const linkHTML = '<li><a href="#tag-' + tag + '"><span>' + tag + '</span></a></li>';
+      /* [NEW] generate code of a link and add it to allTagsHTML */
+      allTagsHTML += linkHTML + ' (' + allTags[tag] + ') ';
+    }
+    /* [NEW] END LOOP: for each tag in allTags: */
+
+    /*[NEW] add HTML from allTagsHTML to tagList */
+    tagList.innerHTML = allTagsHTML;
 
   };
 
@@ -179,7 +218,6 @@
     generateTitleLinks('[data-tags~="' + tag + '"]');
   };
 
-
   const addClickListenersToTags = function () {
     /* find all links to tags */
     const tagLinks = document.querySelectorAll('a[href^="#tag-"]');
@@ -190,12 +228,9 @@
       tagLink.addEventListener('click', tagClickHandler);
 
       /* END LOOP: for each link */
-
-
     }
 
   };
-
 
   //Zadanie: dodanie autora
 
@@ -209,7 +244,7 @@
     for (let article of articles) {
       /* find authors wrapper */
       const authorsWrapper = article.querySelector(optArticleAuthorSelector);
-    
+
       /* get author from data-author attribute */
       const articleAuthor = article.getAttribute('data-author');
 
@@ -242,14 +277,10 @@
 
     const author = href.replace('#author-', '');
 
-    /* find all author links with "href" attribute equal to the "href" constant */
-
-    const sameAuthorLinks = document.querySelectorAll('a[href="' + href + '"]');
-
     /* execute function "generateTitleLinks" with article selector as argument */
-    generateTitleLinks('[data-authors="' + author + '"]');
-  };
+    generateTitleLinks('[data-author="' + author + '"]');
 
+  };
 
   const addClickListenersToAuthors = function () {
     /* find all links to authors*/
@@ -269,10 +300,5 @@
   generateTags();
   addClickListenersToTags();
   addClickListenersToAuthors();
-
-  //CHMURA TAGÓW ..........................................................................................................
-
-  const optTagsListSelector = '.tags.list';
-
 
 }
