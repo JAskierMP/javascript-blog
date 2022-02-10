@@ -267,7 +267,7 @@
 
       const articleAuthorsArray = author.split(' ');
 
-      //Start loop forch each author
+      //Start loop for each author
       for (let author of articleAuthorsArray);
 
       const linkHTML = '<a href="#author-' + author + '"><span>' + author + '</span></a>';
@@ -288,20 +288,25 @@
     /* [NEW] find list of authors in right column */
     const authorList = document.querySelector(optAuthorsListSelector);
 
-    /* [NEW] add html from allTags to tagList */
+    /* [NEW] add html from allAuthors to authorList */
     //authorList.innerHTML = allAuthors.join(' ');
     /* [NEW] create variable for all links HTML code */
     let allAuthorsHTML = '';
 
-    /* [NEW] START LOOP: for each tag in allTags: */
-    for (let author in allAuthors) {
-      /* [NEW] generate code of a link and add it to allTagsHTML */
-      allAuthorsHTML += author + ' (' + allAuthors[author] + ') ';
-    }
-    /* [NEW] END LOOP: for each tag in allTags: */
+    
+    /* [NEW] END LOOP: for each author in allAuthors: */
 
-    /*[NEW] add HTML from allTagsHTML to tagList */
-    authorList.innerHTML = allAuthorsHTML;
+    /*[NEW] add HTML from allAuthorsHTML to AuthorList */
+
+    for (let author in allAuthors) {
+   
+      const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] +  ')</a></li>';
+      
+      /* [NEW] generate code of a link and add it to allAuthorsHTML */
+      authorList.innerHTML = allAuthorsHTML;
+      allAuthorsHTML += authorLinkHTML;
+   
+    }
   };
 
   generateAuthors();
