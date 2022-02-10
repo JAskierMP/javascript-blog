@@ -122,3 +122,42 @@ body {
     margin: 0 10px 0 0;
   }
 }
+
+.tags li {
+  display: inline-block;
+}
+
+.sidebar ul .tag-size-5 {
+  font-size: 45px;
+  a { color: red;
+  }
+}
+
+.sidebar ul .tag-size-4 {
+  font-size: 36px;
+  a { color: rgb(70, 5, 5);
+  }
+}
+
+.sidebar ul .tag-size-3 {
+  font-size: 36px; 
+  a { color: rgb(92, 93, 184);
+  }
+}
+
+.sidebar ul .tag-size-2 {
+  font-size: 27px;
+  a { color: rgb(0, 255, 13);
+  }
+}
+
+.sidebar ul .tag-size-1 {
+  font-size: 18px;
+  a { color: rgb(61, 185, 144);
+  }
+}
+
+.authors li {
+  display: block;
+  font-size: 14px;
+}
