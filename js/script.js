@@ -4,7 +4,7 @@ const templates = {
   tagsarrayLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML), //Dlaczego jak dałem template-tagsarray-link to nie działało
   articleAuthorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tagcloud-link').innerHTML),
-
+  authorListLink: Handlebars.compile(document.querySelector('#template-authorlist-link').innerHTML),
 };
 
 {
@@ -317,15 +317,23 @@ const templates = {
     const authorList = document.querySelector(optAuthorsListSelector);
 
     /* [NEW] create variable for all links HTML code */
-    let allAuthorsHTML = '';
+    //let allAuthorsHTML = '';
+    const allAuthorsData = {authors: []};
 
     for (let author in allAuthors) {
 
       const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
 
       /* [NEW] generate code of a link and add it to allAuthorsHTML */
-      authorList.innerHTML = allAuthorsHTML;
-      allAuthorsHTML += authorLinkHTML;
+      //authorList.innerHTML = allAuthorsHTML;
+      authorList.innerHTML = templates.authorListLink(allAuthorsData);
+      //allAuthorsHTML += authorLinkHTML;
+
+      allAuthorsData.authors.push({
+        author: author,
+        count: allAuthors[author],
+        //className: calculateTagClass(allTags[tag], tagsParams)
+      });
 
     }
   };
