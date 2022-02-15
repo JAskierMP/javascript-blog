@@ -1,7 +1,7 @@
 'use strict';
 const templates = {
   articleLink: Handlebars.compile(document.querySelector('#template-article-link').innerHTML),
-  tagsarrayLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML), //Dlaczego jak dałem template-tagsarray-link to nie działało
+  tagsarrayLink: Handlebars.compile(document.querySelector('#template-tag-link').innerHTML), 
   articleAuthorLink: Handlebars.compile(document.querySelector('#template-author-link').innerHTML),
   tagCloudLink: Handlebars.compile(document.querySelector('#template-tagcloud-link').innerHTML),
   authorListLink: Handlebars.compile(document.querySelector('#template-authorlist-link').innerHTML),
@@ -118,9 +118,7 @@ const templates = {
 
     /* [NEW] create a new variable allTags with an empty object */
     let allTags = {};
-    console.log(allTags)
     
-
     /* find all articles */
 
     const articles = document.querySelectorAll(optArticleSelector);
@@ -140,9 +138,7 @@ const templates = {
       /* split tags into array */
 
       const articleTagsArray = articleTags.split(' ');
-
       
-
       /* START LOOP: for each tag */
 
       for (let tag of articleTagsArray) {
@@ -178,20 +174,13 @@ const templates = {
 
     /* [NEW] create variable for all links HTML code */
     const tagsParams = calculateTagsParams(allTags);
-    console.log('tagsParams:', tagsParams)
+ 
     //let allTagsHTML = '';
     const allTagsData = { tags: [] };
-    
-
-    console.log(allTagsData);
    
-
-
     /* [NEW] START LOOP: for each tag in allTags: */
     for (let tag in allTags) {
-      const tagLinkHTML = '<li class="' + calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a></li>';
-
-      console.log(allTags)
+      //const tagLinkHTML = '<li class="' + calculateTagClass(allTags[tag], tagsParams) + '"><a href="#tag-' + tag + '">' + tag + '</a></li>';
 
       /* [NEW] generate code of a link and add it to allTagsHTML */
       //allTagsHTML += tagLinkHTML;
@@ -296,8 +285,8 @@ const templates = {
       /* get author from data-author attribute */
       const author = article.getAttribute('data-author');
       //const linkHTML = '<a href="#author-' + author + '"><span>' + author + '</span></a>';
-      const linkHTMLData = { id: author, title: author };
-      const linkHTML = templates.articleLink(linkHTMLData);
+      const linkHTMLData = { author: author };
+      const linkHTML = templates.articleAuthorLink(linkHTMLData);   // BYłO articleLink
 
       /* [NEW] check if this link is NOT already in allAuthors */
       if (!allAuthors[author]) {
@@ -322,7 +311,7 @@ const templates = {
 
     for (let author in allAuthors) {
 
-      const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
+      //const authorLinkHTML = '<li><a href="#author-' + author + '">' + author + ' (' + allAuthors[author] + ')</a></li>';
 
       /* [NEW] generate code of a link and add it to allAuthorsHTML */
       //authorList.innerHTML = allAuthorsHTML;
